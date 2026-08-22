@@ -37,10 +37,10 @@ const benefits = [
 ];
 
 const locations = [
-  ['Gulberg, Lahore', '+92 42 111 123 456'],
-  ['Islamabad Airport', '+92 51 111 789 456'],
-  ['Saddar, Karachi', '+92 21 111 321 654'],
-  ['Peshawar Cantt', '+92 91 111 987 321'],
+  ['lahore','Gulberg, Lahore', '+92 42 111 123 456'],
+  ['islamabad','Islamabad Airport', '+92 51 111 789 456'],
+  ['karachi','Saddar, Karachi', '+92 21 111 321 654'],
+  ['peshawar','Peshawar Cantt', '+92 91 111 987 321'],
 ];
 
 const fadeUp = { hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0 } };
@@ -89,20 +89,18 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[.65fr_1.35fr] lg:items-stretch">
           <motion.div initial={{opacity:0,x:-30}} whileInView={{opacity:1,x:0}} viewport={{once:true}}>
             <p className="eyebrow">Our Locations</p><h2 className="section-title">Rent across Pakistan</h2><p className="mt-4 max-w-lg leading-7 text-white/60">Multiple branches in major cities to serve you better. More locations coming soon.</p>
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">{locations.map(([name,phone]) => <div key={name} className="location-card"><MapPin size={18}/><div><strong>{name}</strong><span>{phone}</span></div><ArrowRight size={16}/></div>)}</div>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">{locations.map(([slug,name,phone]) => <Link href={`/locations#${slug}`} key={name} className="location-card"><MapPin size={18}/><div><strong>{name}</strong><span>{phone}</span></div><ArrowRight size={16}/></Link>)}</div>
             <Link href="/locations" className="outline-button mt-5 gap-2">Explore all locations <ArrowRight size={16}/></Link>
           </motion.div>
           <motion.div initial={{opacity:0,x:30}} whileInView={{opacity:1,x:0}} viewport={{once:true}} className="map-panel">
             <div className="map-grid"/><div className="map-line line-a"/><div className="map-line line-b"/><div className="map-line line-c"/>
             <MapDot className="dot-isb" name="Islamabad" sub="Airport"/><MapDot className="dot-lhr" name="Lahore" sub="Gulberg"/><MapDot className="dot-khi" name="Karachi" sub="Saddar"/><MapDot className="dot-pew" name="Peshawar" sub="Cantt"/>
-            <div className="branch-card"><span>Lahore - Gulberg</span><strong>25+</strong><small>Cars Available</small><div className="mt-3 flex items-center gap-1 text-gold"><Star size={15} fill="currentColor"/> 4.8</div><Link href="/locations" className="outline-button mt-4 w-full justify-center">View Branch <ArrowRight size={15}/></Link></div>
+            <div className="branch-card"><span>Lahore - Gulberg</span><strong>25+</strong><small>Cars Available</small><div className="mt-3 flex items-center gap-1 text-gold"><Star size={15} fill="currentColor"/> 4.8</div><Link href="/locations#lahore" className="outline-button mt-4 w-full justify-center">View Branch <ArrowRight size={15}/></Link></div>
           </motion.div>
         </div>
       </section>
 
       <section className="section-shell pb-16"><div className="stats-bar">{[['10K+','Happy Customers'],['2500+','Cars in Fleet'],['15+','Cities Covered'],['99%','Satisfaction Rate']].map(([n,t]) => <div key={t}><strong>{n}</strong><span>{t}</span></div>)}</div></section>
-
-      <footer className="footer-shell"><div className="section-shell grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-5"><div><div className="brand-mark text-2xl font-extrabold">drive<span>i</span>stan</div><p className="mt-4 max-w-xs text-sm leading-6 text-white/50">Pakistan&apos;s premium car rental service. Drive your journey with confidence.</p></div><div><h4 className="font-semibold">Company</h4><div className="mt-4 space-y-3 text-sm text-white/50"><Link href="/about" className="block hover:text-cyan">About Us</Link><Link href="/corporate" className="block hover:text-cyan">Corporate</Link><Link href="/blog" className="block hover:text-cyan">Blog</Link><Link href="/locations" className="block hover:text-cyan">Locations</Link></div></div><div><h4 className="font-semibold">Explore</h4><div className="mt-4 space-y-3 text-sm text-white/50"><Link href="/fleet" className="block hover:text-cyan">Fleet</Link><Link href="/services" className="block hover:text-cyan">Services</Link><Link href="/locations" className="block hover:text-cyan">Locations</Link><Link href="/blog" className="block hover:text-cyan">Blog</Link></div></div><div><h4 className="font-semibold">Support</h4><div className="mt-4 space-y-3 text-sm text-white/50"><span className="block">Help Center</span><span className="block">Terms & Conditions</span><span className="block">Privacy Policy</span><span className="block">Cancellation Policy</span></div></div><div><h4 className="font-semibold">Newsletter</h4><p className="mt-4 text-sm text-white/50">Stay updated with latest offers</p><div className="newsletter mt-4"><input placeholder="Enter your email"/><button><ArrowRight size={18}/></button></div></div></div><div className="section-shell flex flex-col gap-3 border-t border-white/8 py-5 text-xs text-white/40 sm:flex-row sm:justify-between"><span>© 2026 DriveIstan. All rights reserved.</span><span>Secure booking · Verified fleet · 24/7 support</span></div></footer>
     </main>
   );
 }
