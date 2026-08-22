@@ -37,8 +37,8 @@ button { cursor: pointer; }
 .outline-button:hover { border-color:#00F0FF; background:rgba(0,240,255,.08); box-shadow:0 0 20px rgba(0,240,255,.12); }
 .header-whatsapp { width:42px; height:42px; border:1px solid #25D366; border-radius:999px; display:grid; place-items:center; color:#25D366; background:#07110b; box-shadow:0 0 18px rgba(37,211,102,.16); }
 
-.hero-stage { min-height: 792px; position:relative; overflow:hidden; }
-.hero-video { position:absolute; inset:72px 0 0; width:100%; height:calc(100% - 72px); object-fit:cover; object-position:center; }
+.hero-stage { min-height: 720px; position:relative; overflow:hidden; }
+.hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; }
 .hero-overlay { background:linear-gradient(90deg,rgba(4,7,12,.96) 0%,rgba(4,8,13,.68) 38%,rgba(4,8,13,.3) 60%,rgba(4,7,11,.84) 100%),linear-gradient(180deg,rgba(3,6,10,.18) 0%,rgba(5,8,12,.08) 58%,#08090C 100%); }
 .hero-light { background:radial-gradient(circle at 53% 54%,rgba(0,240,255,.12),transparent 25%),radial-gradient(circle at 80% 30%,rgba(0,240,255,.07),transparent 28%); pointer-events:none; }
 .hero-pill { display:inline-flex; border:1px solid rgba(0,240,255,.48); background:rgba(0,240,255,.08); color:#4cf6ff; border-radius:999px; padding:7px 13px; font-size:12px; box-shadow:inset 0 0 20px rgba(0,240,255,.05); }
@@ -98,19 +98,14 @@ button { cursor: pointer; }
 @keyframes whatsappPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
 @keyframes mapPulse { 0%{box-shadow:0 0 0 0 rgba(0,240,255,.45),0 0 22px #00F0FF} 70%{box-shadow:0 0 0 12px rgba(0,240,255,0),0 0 22px #00F0FF} 100%{box-shadow:0 0 0 0 rgba(0,240,255,0),0 0 22px #00F0FF} }
 
-@media (max-width:1024px){
- .benefit-bar{grid-template-columns:repeat(2,1fr)}
- .benefit-item{border-bottom:1px solid rgba(255,255,255,.07)}
- .stats-bar{grid-template-columns:repeat(2,1fr)}
- .hero-stage{min-height:auto}
+@media (max-width: 1024px){
+  .benefit-bar{grid-template-columns:repeat(2,1fr)}
+  .benefit-item{border-bottom:1px solid rgba(255,255,255,.07)}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
 }
-@media (max-width:640px){
- .section-shell{width:min(100% - 28px,1376px)}
- .hero-video{inset:72px 0 0;height:calc(100% - 72px)}
- .benefit-bar,.stats-bar{grid-template-columns:1fr}
- .benefit-item,.stats-bar>div{border-right:0;border-bottom:1px solid rgba(255,255,255,.07)}
- .stats-bar>div:last-child{border-bottom:0}
- .map-panel{min-height:360px}
- .branch-card{width:160px;right:10px;bottom:10px}
- .dot-isb{left:52%}.dot-lhr{left:58%}.dot-khi{left:24%}.dot-pew{left:37%}
+@media (max-width: 640px){
+  .section-shell{width:min(100% - 28px,1376px)}
+  .hero-stage{min-height:auto}
+  .benefit-bar,.stats-bar{grid-template-columns:1fr}
+  .benefit-item,.stats-bar>div{border-right:0;border-bottom:1px solid rgba(255,255,255,.07)}
 }
