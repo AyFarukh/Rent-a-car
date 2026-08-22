@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  MANAGER
+  DRIVER
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  RESERVED
+  ON_ROAD
+  MAINTENANCE
+  INACTIVE
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String?
+  passwordHash String?
+  role         UserRole @default(CUSTOMER)
+  bookings     Booking[]
+  documents    VerificationDocument[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Location {
+  id        String    @id @default(cuid())
+  name      String
+  city      String
+  address   String
+  latitude  Float?
+  longitude Float?
+  vehicles  Vehicle[]
+  pickups   Booking[] @relation("PickupLocation")
+  dropoffs  Booking[] @relation("DropoffLocation")
+  createdAt DateTime  @default(now())
+}
+
+model Vehicle {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  make           String
+  model          String
+  year           Int
+  registrationNo String        @unique
+  seats          Int
+  doors          Int
+  transmission   String
+  fuelType       String
+  dailyRate      Decimal       @db.Decimal(12, 2)
+  weeklyDiscount Int           @default(8)
+  monthlyDiscount Int          @default(15)
+  status         VehicleStatus @default(AVAILABLE)
+  featured       Boolean       @default(false)
+  locationId     String
+  location       Location      @relation(fields: [locationId], references: [id])
+  images         VehicleImage[]
+  bookings       Booking[]
+  tracking       FleetTracking[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model VehicleImage {
+  id        String  @id @default(cuid())
+  vehicleId String
+  vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  sortOrder Int     @default(0)
+  is360     Boolean @default(false)
+}
+
+model Booking {
+  id                String        @id @default(cuid())
+  bookingNo         String        @unique
+  userId            String
+  user              User          @relation(fields: [userId], references: [id])
+  vehicleId         String
+  vehicle           Vehicle       @relation(fields: [vehicleId], references: [id])
+  pickupLocationId  String
+  pickupLocation    Location      @relation("PickupLocation", fields: [pickupLocationId], references: [id])
+  dropoffLocationId String
+  dropoffLocation   Location      @relation("DropoffLocation", fields: [dropoffLocationId], references: [id])
+  pickupAt          DateTime
+  dropoffAt         DateTime
+  withDriver        Boolean       @default(false)
+  subtotal          Decimal       @db.Decimal(12, 2)
+  discount          Decimal       @default(0) @db.Decimal(12, 2)
+  addonsTotal       Decimal       @default(0) @db.Decimal(12, 2)
+  total             Decimal       @db.Decimal(12, 2)
+  status            BookingStatus @default(PENDING)
+  addons            BookingAddon[]
+  payment           Payment?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+model BookingAddon {
+  id        String  @id @default(cuid())
+  bookingId String
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  name      String
+  price     Decimal @db.Decimal(12, 2)
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  bookingId     String        @unique
+  booking       Booking       @relation(fields: [bookingId], references: [id])
+  provider      String
+  transactionId String?
+  amount        Decimal       @db.Decimal(12, 2)
+  status        PaymentStatus @default(PENDING)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model VerificationDocument {
+  id        String             @id @default(cuid())
+  userId    String
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  fileUrl   String
+  status    VerificationStatus @default(PENDING)
+  note      String?
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+}
+
+model FleetTracking {
+  id        String   @id @default(cuid())
+  vehicleId String
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  latitude  Float
+  longitude Float
+  speedKph  Float?
+  heading   Float?
+  recordedAt DateTime @default(now())
+
+  @@index([vehicleId, recordedAt])
+}
