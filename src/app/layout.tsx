@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <SiteHeader />
         {children}
+        <SiteFooter />
         <FloatingWhatsApp />
       </body>
     </html>
