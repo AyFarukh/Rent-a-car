@@ -2,79 +2,181 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { CalendarDays, Car, Fuel, MapPin, MessageCircle, Settings2, Users } from 'lucide-react';
+import {
+  ArrowRight,
+  CalendarDays,
+  Car,
+  CheckCircle2,
+  CreditCard,
+  Fuel,
+  Headphones,
+  Heart,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Play,
+  Settings2,
+  ShieldCheck,
+  Star,
+  Users,
+} from 'lucide-react';
 
 const fleet = [
-  { name: 'Toyota Yaris', price: 'PKR 7,500', image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=900&q=80' },
-  { name: 'Honda Civic', price: 'PKR 10,000', image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=900&q=80' },
-  { name: 'Kia Sportage', price: 'PKR 14,500', image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=80' },
-  { name: 'Toyota Fortuner', price: 'PKR 20,000', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=900&q=80' },
-  { name: 'Mercedes E-Class', price: 'PKR 30,000', image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=900&q=80' },
+  { name: 'Toyota Yaris', badge: 'POPULAR', price: 'PKR 7,500', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Honda Civic', badge: 'BEST SELLER', price: 'PKR 10,000', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Kia Sportage', badge: '', price: 'PKR 14,500', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Toyota Fortuner', badge: '', price: 'PKR 20,000', seats: 7, fuel: 'Diesel', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=85' },
+  { name: 'Mercedes E-Class', badge: 'LUXURY', price: 'PKR 30,000', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=85' },
 ];
+
+const benefits = [
+  { icon: ShieldCheck, title: 'Verified Drivers', text: 'Background checked' },
+  { icon: Headphones, title: '24/7 Roadside', text: 'Assistance' },
+  { icon: CreditCard, title: 'Secure Payments', text: 'JazzCash, EasyPaisa' },
+  { icon: CheckCircle2, title: 'CNIC Verified', text: 'Safe & secure' },
+  { icon: ShieldCheck, title: 'Insurance Covered', text: 'Complete protection' },
+];
+
+const locations = [
+  ['Gulberg, Lahore', '+92 42 111 123 456'],
+  ['Islamabad Airport', '+92 51 111 789 456'],
+  ['Saddar, Karachi', '+92 21 111 321 654'],
+  ['Peshawar Cantt', '+92 91 111 987 321'],
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0 },
+};
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-background">
-      <header className="glass fixed inset-x-0 top-0 z-50">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <a href="#" className="text-xl font-bold tracking-tight">drive<span className="text-cyan">i</span>stan</a>
-          <nav className="hidden items-center gap-8 text-sm text-muted md:flex">
-            <a href="#fleet" className="hover:text-white">Fleet</a><a href="#services" className="hover:text-white">Services</a><a href="#locations" className="hover:text-white">Locations</a><a href="#" className="hover:text-white">Corporate</a><a href="#" className="hover:text-white">Blog</a>
+    <main className="min-h-screen overflow-hidden bg-background">
+      <header className="glass fixed inset-x-0 top-0 z-50 border-x-0 border-t-0">
+        <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 lg:px-8">
+          <a href="#" className="brand-mark text-2xl font-extrabold tracking-tight">drive<span>i</span>stan</a>
+          <nav className="hidden items-center gap-8 text-sm text-white/75 lg:flex">
+            {['Fleet','Services','Locations','Corporate','Blog','About Us'].map((item) => <a key={item} href={`#${item.toLowerCase().replace(' ','-')}`} className="nav-link">{item}</a>)}
           </nav>
-          <button className="rounded-lg bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:scale-105">Book Now</button>
+          <div className="flex items-center gap-3">
+            <div className="hidden items-center gap-2 text-xs text-white/70 xl:flex"><Phone size={16} className="text-cyan"/><div><strong className="block text-sm text-white">+92 300 1234567</strong><span>24/7 Support</span></div></div>
+            <button className="cyan-button hidden sm:inline-flex">Book Now</button>
+            <button aria-label="WhatsApp" className="header-whatsapp"><MessageCircle size={20}/></button>
+          </div>
         </div>
       </header>
 
-      <section className="relative min-h-[760px] overflow-hidden pt-16">
-        <Image src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=85" alt="Northern Pakistan mountain road" fill priority className="object-cover" />
+      <section className="hero-stage relative pt-[72px]">
+        <Image src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=2200&q=90" alt="Mountain road in northern Pakistan" fill priority className="hero-bg object-cover" />
         <div className="hero-overlay absolute inset-0" />
-        <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-5 py-24 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:py-36">
+        <div className="hero-light absolute inset-0" />
+
+        <div className="relative z-10 mx-auto grid min-h-[720px] max-w-[1440px] gap-12 px-5 py-16 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:px-8 xl:gap-20">
           <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: .1 } } }}>
-            {[
-              <span key="badge" className="mb-5 inline-flex rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1 text-xs font-medium text-cyan">Pakistan-wide premium mobility</span>,
-              <h1 key="h1" className="text-gradient max-w-3xl text-5xl font-bold leading-[1.05] md:text-6xl">Premium Car Rentals Across Pakistan</h1>,
-              <p key="p" className="mt-5 max-w-xl text-lg text-muted">Self-Drive & Chauffeur Services. Instant Booking, verified vehicles and support wherever the road takes you.</p>,
-              <div key="route" className="mt-7 flex gap-3"><span className="rounded-lg bg-cyan px-4 py-2 text-sm font-semibold text-black">Naran Valley</span><span className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm">Islamabad</span></div>,
-            ].map((el, i) => <motion.div key={i} variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}>{el}</motion.div>)}
+            <motion.span variants={fadeUp} className="hero-pill">Pakistan-wide premium mobility</motion.span>
+            <motion.h1 variants={fadeUp} className="hero-title mt-5 max-w-3xl text-5xl font-extrabold leading-[1.02] sm:text-6xl xl:text-7xl">
+              Premium Car Rentals <span>Across Pakistan</span>
+            </motion.h1>
+            <motion.p variants={fadeUp} className="mt-5 max-w-2xl text-base leading-7 text-white/72 sm:text-lg">Self-Drive & Chauffeur Services. Instant Booking, verified vehicles and support wherever the road takes you.</motion.p>
+            <motion.div variants={fadeUp} className="mt-7 flex flex-wrap gap-6 text-sm">
+              <TrustMini icon={ShieldCheck} label="Verified Fleet" sub="100% inspected"/>
+              <TrustMini icon={CheckCircle2} label="Best Price" sub="Guaranteed"/>
+              <TrustMini icon={Headphones} label="24/7 Support" sub="Always here"/>
+            </motion.div>
+            <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4">
+              <button className="cyan-button gap-2 px-6 py-3">Explore Fleet <ArrowRight size={18}/></button>
+              <button className="outline-button gap-2 px-6 py-3">How It Works <Play size={16}/></button>
+            </motion.div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .35 }} className="glass rounded-2xl p-5 shadow-2xl">
-            <div className="mb-5 grid grid-cols-2 rounded-xl bg-black/30 p-1 text-sm"><button className="rounded-lg bg-white/10 px-4 py-3 font-semibold text-white">Self-Drive</button><button className="px-4 py-3 text-muted">With Driver</button></div>
-            <div className="space-y-4">
+          <motion.div initial={{ opacity: 0, x: 40, scale: .97 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: .7, delay: .2 }} className="booking-card">
+            <div className="booking-tabs"><button className="active">Self-Drive</button><button>With Driver</button></div>
+            <div className="mt-5 space-y-4">
               <Field icon={<MapPin size={17}/>} label="Pickup Location" value="Islamabad, Pakistan" />
               <Field icon={<MapPin size={17}/>} label="Drop-off Location" value="Lahore, Pakistan" />
-              <div className="grid grid-cols-2 gap-3"><Field icon={<CalendarDays size={17}/>} label="Pickup" value="25 Aug, 10:00" /><Field icon={<CalendarDays size={17}/>} label="Return" value="28 Aug, 18:00" /></div>
-              <button className="w-full rounded-xl bg-cyan py-3.5 font-semibold text-black shadow-cyan transition hover:brightness-110">Find My Car</button>
+              <Field icon={<CalendarDays size={17}/>} label="Pickup Date & Time" value="25 Aug, 2026 · 10:00 AM" />
+              <Field icon={<CalendarDays size={17}/>} label="Return Date & Time" value="28 Aug, 2026 · 06:00 PM" />
+              <button className="cyan-button mt-2 w-full justify-center py-4 text-base">Find My Car <ArrowRight size={18}/></button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section id="fleet" className="mx-auto max-w-7xl px-5 py-20">
-        <div className="mb-8 flex items-end justify-between"><div><p className="text-sm font-semibold uppercase tracking-[.2em] text-cyan">Featured Fleet</p><h2 className="mt-2 text-3xl font-semibold">Choose your drive</h2></div><a href="#" className="hidden text-sm text-muted md:block">View all vehicles →</a></div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {fleet.map((vehicle) => <FleetCard key={vehicle.name} {...vehicle} />)}
+      <section id="fleet" className="section-shell py-20">
+        <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} className="mb-8 flex items-end justify-between">
+          <div><p className="eyebrow">Featured Fleet</p><h2 className="section-title">Choose your perfect drive</h2></div>
+          <button className="outline-button hidden md:inline-flex">View all vehicles <ArrowRight size={16}/></button>
+        </motion.div>
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+          {fleet.map((vehicle, i) => <FleetCard key={vehicle.name} {...vehicle} index={i} />)}
         </div>
       </section>
 
-      <section id="locations" className="border-y border-border/70 bg-surface/60">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 md:grid-cols-2 md:items-center">
-          <div><p className="text-sm font-semibold uppercase tracking-[.2em] text-cyan">Our Locations</p><h2 className="mt-3 text-3xl font-semibold">Rent across Pakistan</h2><p className="mt-4 max-w-lg text-muted">Start from major hubs in Lahore, Islamabad, Karachi and Peshawar, with more branch coverage planned.</p><div className="mt-8 grid grid-cols-2 gap-3 text-sm">{['Gulberg, Lahore','Islamabad Airport','Saddar, Karachi','Peshawar Cantt'].map(x => <div key={x} className="rounded-xl border border-border bg-background/60 p-4"><MapPin className="mb-3 text-cyan" size={18}/>{x}</div>)}</div></div>
-          <div className="relative min-h-[340px] overflow-hidden rounded-2xl border border-border bg-[#0b0e16] p-6"><div className="absolute inset-0 opacity-30" style={{backgroundImage:'radial-gradient(circle at 1px 1px, #2D303E 1px, transparent 0)',backgroundSize:'24px 24px'}}/><div className="relative flex h-full min-h-[290px] items-center justify-center text-center"><div><MapPin className="mx-auto text-cyan" size={48}/><p className="mt-4 font-semibold">Interactive Pakistan branch map</p><p className="mt-2 text-sm text-muted">Leaflet integration is the next implementation step.</p></div></div></div>
+      <section id="services" className="section-shell pb-14">
+        <div className="benefit-bar">
+          {benefits.map(({icon:Icon,title,text}) => <div key={title} className="benefit-item"><div className="benefit-icon"><Icon size={23}/></div><div><strong>{title}</strong><span>{text}</span></div></div>)}
         </div>
       </section>
 
-      <footer className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-10 text-sm text-muted md:flex-row md:items-center md:justify-between"><span>© 2026 DriveIstan. Premium mobility across Pakistan.</span><span>Secure booking · Verified fleet · 24/7 support</span></footer>
+      <section id="locations" className="section-shell py-16">
+        <div className="grid gap-10 lg:grid-cols-[.65fr_1.35fr] lg:items-stretch">
+          <motion.div initial={{opacity:0,x:-30}} whileInView={{opacity:1,x:0}} viewport={{once:true}}>
+            <p className="eyebrow">Our Locations</p><h2 className="section-title">Rent across Pakistan</h2><p className="mt-4 max-w-lg leading-7 text-white/60">Multiple branches in major cities to serve you better. More locations coming soon.</p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">{locations.map(([name,phone]) => <div key={name} className="location-card"><MapPin size={18}/><div><strong>{name}</strong><span>{phone}</span></div><ArrowRight size={16}/></div>)}</div>
+            <button className="outline-button mt-5 gap-2">Explore all locations <ArrowRight size={16}/></button>
+          </motion.div>
 
-      <button aria-label="WhatsApp" className="fixed bottom-6 right-6 z-50 rounded-full bg-[#25D366] p-4 text-black shadow-xl animate-pulse"><MessageCircle size={25}/></button>
+          <motion.div initial={{opacity:0,x:30}} whileInView={{opacity:1,x:0}} viewport={{once:true}} className="map-panel">
+            <div className="map-grid"/>
+            <div className="map-line line-a"/><div className="map-line line-b"/><div className="map-line line-c"/>
+            <MapDot className="dot-isb" name="Islamabad" sub="Airport"/>
+            <MapDot className="dot-lhr" name="Lahore" sub="Gulberg"/>
+            <MapDot className="dot-khi" name="Karachi" sub="Saddar"/>
+            <MapDot className="dot-pew" name="Peshawar" sub="Cantt"/>
+            <div className="branch-card"><span>Lahore - Gulberg</span><strong>25+</strong><small>Cars Available</small><div className="mt-3 flex items-center gap-1 text-gold"><Star size={15} fill="currentColor"/> 4.8</div><button className="outline-button mt-4 w-full justify-center">View Branch <ArrowRight size={15}/></button></div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="section-shell pb-16">
+        <div className="stats-bar">
+          {[['10K+','Happy Customers'],['2500+','Cars in Fleet'],['15+','Cities Covered'],['99%','Satisfaction Rate']].map(([n,t]) => <div key={t}><strong>{n}</strong><span>{t}</span></div>)}
+        </div>
+      </section>
+
+      <footer className="footer-shell">
+        <div className="section-shell grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-5">
+          <div><div className="brand-mark text-2xl font-extrabold">drive<span>i</span>stan</div><p className="mt-4 max-w-xs text-sm leading-6 text-white/50">Pakistan&apos;s premium car rental service. Drive your journey with confidence.</p></div>
+          {[
+            ['Company',['About Us','Careers','Press','Contact Us']],
+            ['Explore',['Fleet','Services','Locations','Blog']],
+            ['Support',['Help Center','Terms & Conditions','Privacy Policy','Cancellation Policy']],
+          ].map(([title,items]) => <div key={title as string}><h4 className="font-semibold">{title}</h4><div className="mt-4 space-y-3 text-sm text-white/50">{(items as string[]).map(i=><a key={i} href="#" className="block hover:text-cyan">{i}</a>)}</div></div>)}
+          <div><h4 className="font-semibold">Newsletter</h4><p className="mt-4 text-sm text-white/50">Stay updated with latest offers</p><div className="newsletter mt-4"><input placeholder="Enter your email"/><button><ArrowRight size={18}/></button></div></div>
+        </div>
+        <div className="section-shell flex flex-col gap-3 border-t border-white/8 py-5 text-xs text-white/40 sm:flex-row sm:justify-between"><span>© 2026 DriveIstan. All rights reserved.</span><span>Secure booking · Verified fleet · 24/7 support</span></div>
+      </footer>
+
+      <button aria-label="WhatsApp" className="floating-whatsapp"><MessageCircle size={26}/><span className="whatsapp-dot">1</span></button>
     </main>
   );
 }
 
-function Field({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return <label className="block"><span className="mb-1.5 block text-xs text-muted">{label}</span><div className="flex items-center gap-2 rounded-xl border border-border bg-black/25 px-3 py-3 text-sm"><span className="text-cyan">{icon}</span><span className="truncate">{value}</span></div></label>;
+function TrustMini({ icon:Icon, label, sub }: { icon: typeof ShieldCheck; label: string; sub: string }) {
+  return <div className="flex items-center gap-2"><div className="mini-trust-icon"><Icon size={18}/></div><div><strong className="block text-white">{label}</strong><span className="text-xs text-white/45">{sub}</span></div></div>;
 }
 
-function FleetCard({ name, price, image }: { name: string; price: string; image: string }) {
-  return <motion.article whileHover={{ y: -8 }} className="group overflow-hidden rounded-2xl border border-border bg-surface transition-colors hover:border-cyan hover:shadow-cyan"><div className="relative h-40 overflow-hidden"><Image src={image} alt={name} fill className="object-cover transition duration-500 group-hover:scale-105" /></div><div className="p-4"><h3 className="font-semibold">{name}</h3><div className="mt-3 grid grid-cols-3 gap-1 text-[11px] text-muted"><span className="flex items-center gap-1"><Users size={13}/>5</span><span className="flex items-center gap-1"><Settings2 size={13}/>Auto</span><span className="flex items-center gap-1"><Fuel size={13}/>Petrol</span></div><div className="mt-4"><span className="font-semibold text-cyan">{price}</span><span className="text-xs text-muted"> / day</span></div><button className="mt-4 w-full rounded-lg border border-border py-2 text-sm font-medium transition hover:border-cyan hover:bg-cyan hover:text-black">View Details</button></div></motion.article>;
+function Field({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return <label className="block"><span className="mb-2 block text-xs text-white/55">{label}</span><div className="field-box"><span className="text-cyan">{icon}</span><span className="truncate">{value}</span><span className="ml-auto text-white/35">×</span></div></label>;
+}
+
+function FleetCard({ name, badge, price, seats, fuel, image, index }: { name:string; badge:string; price:string; seats:number; fuel:string; image:string; index:number }) {
+  return <motion.article initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:index*.07}} whileHover={{y:-10}} className="fleet-card group">
+    <div className="relative h-44 overflow-hidden"><Image src={image} alt={name} fill className="object-cover transition duration-700 group-hover:scale-110"/>{badge && <span className={`fleet-badge ${badge==='LUXURY'?'gold':''}`}>{badge}</span>}<button className="heart-btn"><Heart size={17}/></button></div>
+    <div className="p-4"><h3 className="text-base font-semibold">{name}</h3><div className="mt-3 flex flex-wrap gap-3 text-[11px] text-white/45"><span><Users size={13}/> {seats} Seats</span><span><Settings2 size={13}/> Auto</span><span><Fuel size={13}/> {fuel}</span></div><div className="mt-4"><strong className="text-cyan">{price}</strong><span className="text-xs text-white/45"> / day</span></div><button className="card-button mt-4">View Details <ArrowRight size={15}/></button></div>
+  </motion.article>;
+}
+
+function MapDot({className,name,sub}:{className:string;name:string;sub:string}) {
+  return <div className={`map-dot ${className}`}><span className="pulse-dot"/><div><strong>{name}</strong><small>{sub}</small></div></div>;
 }
