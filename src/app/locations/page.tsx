@@ -1,13 +1,14 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Phone, Clock3, Car } from 'lucide-react';
 
 const branches=[
- {city:'Lahore',name:'Gulberg Branch',address:'Main Boulevard Gulberg III, Lahore',phone:'+92 42 111 123 456',cars:25},
- {city:'Islamabad',name:'Airport Branch',address:'Islamabad International Airport',phone:'+92 51 111 789 456',cars:18},
- {city:'Karachi',name:'Saddar Branch',address:'Saddar, Karachi',phone:'+92 21 111 321 654',cars:32},
- {city:'Peshawar',name:'Cantt Branch',address:'Peshawar Cantt',phone:'+92 91 111 987 321',cars:14},
+ {slug:'lahore',city:'Lahore',name:'Gulberg Branch',address:'Main Boulevard Gulberg III, Lahore',phone:'+92 42 111 123 456',cars:25},
+ {slug:'islamabad',city:'Islamabad',name:'Airport Branch',address:'Islamabad International Airport',phone:'+92 51 111 789 456',cars:18},
+ {slug:'karachi',city:'Karachi',name:'Saddar Branch',address:'Saddar, Karachi',phone:'+92 21 111 321 654',cars:32},
+ {slug:'peshawar',city:'Peshawar',name:'Cantt Branch',address:'Peshawar Cantt',phone:'+92 91 111 987 321',cars:14},
 ];
 
 export default function LocationsPage(){
@@ -25,7 +26,7 @@ export default function LocationsPage(){
        <div className="branch-card"><span>Pakistan Network</span><strong>4</strong><small>Live branch hubs</small><div className="mt-3 text-xs text-white/50">Lahore · Islamabad · Karachi · Peshawar</div></div>
      </div>
    </section>
-   <section className="section-shell py-14"><div className="grid gap-5 md:grid-cols-2">{branches.map((b,i)=><motion.article key={b.name} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}} whileHover={{y:-5}} className="rounded-2xl border border-white/10 bg-white/[.025] p-6"><div className="flex items-start justify-between gap-4"><div><span className="text-xs uppercase tracking-[.18em] text-cyan">{b.city}</span><h2 className="mt-1 text-xl font-semibold">{b.name}</h2></div><div className="rounded-xl bg-cyan/10 p-3 text-cyan"><MapPin size={20}/></div></div><div className="mt-5 space-y-3 text-sm text-white/55"><p className="flex gap-2"><MapPin size={16}/>{b.address}</p><p className="flex gap-2"><Phone size={16}/>{b.phone}</p><p className="flex gap-2"><Clock3 size={16}/>Open daily · 08:00 AM to 10:00 PM</p><p className="flex gap-2"><Car size={16}/>{b.cars}+ vehicles available</p></div><button className="outline-button mt-6 gap-2">View Branch <ArrowRight size={15}/></button></motion.article>)}</div></section>
+   <section className="section-shell py-14"><div className="grid gap-5 md:grid-cols-2">{branches.map((b,i)=><motion.article id={b.slug} key={b.name} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}} whileHover={{y:-5}} className="scroll-mt-28 rounded-2xl border border-white/10 bg-white/[.025] p-6"><div className="flex items-start justify-between gap-4"><div><span className="text-xs uppercase tracking-[.18em] text-cyan">{b.city}</span><h2 className="mt-1 text-xl font-semibold">{b.name}</h2></div><div className="rounded-xl bg-cyan/10 p-3 text-cyan"><MapPin size={20}/></div></div><div className="mt-5 space-y-3 text-sm text-white/55"><p className="flex gap-2"><MapPin size={16}/>{b.address}</p><p className="flex gap-2"><Phone size={16}/>{b.phone}</p><p className="flex gap-2"><Clock3 size={16}/>Open daily · 08:00 AM to 10:00 PM</p><p className="flex gap-2"><Car size={16}/>{b.cars}+ vehicles available</p></div><div className="mt-6 flex flex-wrap gap-3"><Link href={`/fleet?pickup=${encodeURIComponent(b.city+', Pakistan')}`} className="outline-button gap-2">View Branch Fleet <ArrowRight size={15}/></Link><a href={`tel:${b.phone.replace(/\s/g,'')}`} className="cyan-button gap-2">Call Branch <Phone size={15}/></a></div></motion.article>)}</div></section>
  </main>
 }
 
