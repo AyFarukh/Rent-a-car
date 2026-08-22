@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
   CalendarDays,
-  Car,
   CheckCircle2,
   CreditCard,
   Fuel,
@@ -22,11 +22,11 @@ import {
 } from 'lucide-react';
 
 const fleet = [
-  { name: 'Toyota Yaris', badge: 'POPULAR', price: 'PKR 7,500', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=1000&q=85' },
-  { name: 'Honda Civic', badge: 'BEST SELLER', price: 'PKR 10,000', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1000&q=85' },
-  { name: 'Kia Sportage', badge: '', price: 'PKR 14,500', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=85' },
-  { name: 'Toyota Fortuner', badge: '', price: 'PKR 20,000', seats: 7, fuel: 'Diesel', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=85' },
-  { name: 'Mercedes E-Class', badge: 'LUXURY', price: 'PKR 30,000', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=85' },
+  { slug:'toyota-yaris', name: 'Toyota Yaris', badge: 'POPULAR', price: 'PKR 7,500', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=1000&q=85' },
+  { slug:'honda-civic', name: 'Honda Civic', badge: 'BEST SELLER', price: 'PKR 10,000', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1000&q=85' },
+  { slug:'kia-sportage', name: 'Kia Sportage', badge: '', price: 'PKR 14,500', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1000&q=85' },
+  { slug:'toyota-fortuner', name: 'Toyota Fortuner', badge: '', price: 'PKR 20,000', seats: 7, fuel: 'Diesel', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=85' },
+  { slug:'mercedes-e-class', name: 'Mercedes E-Class', badge: 'LUXURY', price: 'PKR 30,000', seats: 5, fuel: 'Petrol', image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=85' },
 ];
 
 const benefits = [
@@ -54,20 +54,27 @@ export default function HomePage() {
     <main className="min-h-screen overflow-hidden bg-background">
       <header className="glass fixed inset-x-0 top-0 z-50 border-x-0 border-t-0">
         <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 lg:px-8">
-          <a href="#" className="brand-mark text-2xl font-extrabold tracking-tight">drive<span>i</span>stan</a>
+          <Link href="/" className="brand-mark text-2xl font-extrabold tracking-tight">drive<span>i</span>stan</Link>
           <nav className="hidden items-center gap-8 text-sm text-white/75 lg:flex">
-            {['Fleet','Services','Locations','Corporate','Blog','About Us'].map((item) => <a key={item} href={`#${item.toLowerCase().replace(' ','-')}`} className="nav-link">{item}</a>)}
+            <Link href="/fleet" className="nav-link">Fleet</Link>
+            <Link href="/services" className="nav-link">Services</Link>
+            <Link href="/locations" className="nav-link">Locations</Link>
+            <Link href="/corporate" className="nav-link">Corporate</Link>
+            <Link href="/blog" className="nav-link">Blog</Link>
+            <Link href="/about" className="nav-link">About Us</Link>
           </nav>
           <div className="flex items-center gap-3">
             <div className="hidden items-center gap-2 text-xs text-white/70 xl:flex"><Phone size={16} className="text-cyan"/><div><strong className="block text-sm text-white">+92 300 1234567</strong><span>24/7 Support</span></div></div>
-            <button className="cyan-button hidden sm:inline-flex">Book Now</button>
+            <Link href="/fleet" className="cyan-button hidden sm:inline-flex">Book Now</Link>
             <button aria-label="WhatsApp" className="header-whatsapp"><MessageCircle size={20}/></button>
           </div>
         </div>
       </header>
 
       <section className="hero-stage relative pt-[72px]">
-        <Image src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=2200&q=90" alt="Mountain road in northern Pakistan" fill priority className="hero-bg object-cover" />
+        <video className="hero-video" autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=2200&q=90">
+          <source src="https://cdn.coverr.co/videos/coverr-driving-in-the-mountains-1570/1080p.mp4" type="video/mp4" />
+        </video>
         <div className="hero-overlay absolute inset-0" />
         <div className="hero-light absolute inset-0" />
 
@@ -84,8 +91,8 @@ export default function HomePage() {
               <TrustMini icon={Headphones} label="24/7 Support" sub="Always here"/>
             </motion.div>
             <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4">
-              <button className="cyan-button gap-2 px-6 py-3">Explore Fleet <ArrowRight size={18}/></button>
-              <button className="outline-button gap-2 px-6 py-3">How It Works <Play size={16}/></button>
+              <Link href="/fleet" className="cyan-button gap-2 px-6 py-3">Explore Fleet <ArrowRight size={18}/></Link>
+              <Link href="/services" className="outline-button gap-2 px-6 py-3">How It Works <Play size={16}/></Link>
             </motion.div>
           </motion.div>
 
@@ -96,7 +103,7 @@ export default function HomePage() {
               <Field icon={<MapPin size={17}/>} label="Drop-off Location" value="Lahore, Pakistan" />
               <Field icon={<CalendarDays size={17}/>} label="Pickup Date & Time" value="25 Aug, 2026 · 10:00 AM" />
               <Field icon={<CalendarDays size={17}/>} label="Return Date & Time" value="28 Aug, 2026 · 06:00 PM" />
-              <button className="cyan-button mt-2 w-full justify-center py-4 text-base">Find My Car <ArrowRight size={18}/></button>
+              <Link href="/fleet" className="cyan-button mt-2 w-full justify-center py-4 text-base">Find My Car <ArrowRight size={18}/></Link>
             </div>
           </motion.div>
         </div>
@@ -105,7 +112,7 @@ export default function HomePage() {
       <section id="fleet" className="section-shell py-20">
         <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} className="mb-8 flex items-end justify-between">
           <div><p className="eyebrow">Featured Fleet</p><h2 className="section-title">Choose your perfect drive</h2></div>
-          <button className="outline-button hidden md:inline-flex">View all vehicles <ArrowRight size={16}/></button>
+          <Link href="/fleet" className="outline-button hidden md:inline-flex">View all vehicles <ArrowRight size={16}/></Link>
         </motion.div>
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
           {fleet.map((vehicle, i) => <FleetCard key={vehicle.name} {...vehicle} index={i} />)}
@@ -123,7 +130,7 @@ export default function HomePage() {
           <motion.div initial={{opacity:0,x:-30}} whileInView={{opacity:1,x:0}} viewport={{once:true}}>
             <p className="eyebrow">Our Locations</p><h2 className="section-title">Rent across Pakistan</h2><p className="mt-4 max-w-lg leading-7 text-white/60">Multiple branches in major cities to serve you better. More locations coming soon.</p>
             <div className="mt-7 grid gap-3 sm:grid-cols-2">{locations.map(([name,phone]) => <div key={name} className="location-card"><MapPin size={18}/><div><strong>{name}</strong><span>{phone}</span></div><ArrowRight size={16}/></div>)}</div>
-            <button className="outline-button mt-5 gap-2">Explore all locations <ArrowRight size={16}/></button>
+            <Link href="/locations" className="outline-button mt-5 gap-2">Explore all locations <ArrowRight size={16}/></Link>
           </motion.div>
 
           <motion.div initial={{opacity:0,x:30}} whileInView={{opacity:1,x:0}} viewport={{once:true}} className="map-panel">
@@ -133,7 +140,7 @@ export default function HomePage() {
             <MapDot className="dot-lhr" name="Lahore" sub="Gulberg"/>
             <MapDot className="dot-khi" name="Karachi" sub="Saddar"/>
             <MapDot className="dot-pew" name="Peshawar" sub="Cantt"/>
-            <div className="branch-card"><span>Lahore - Gulberg</span><strong>25+</strong><small>Cars Available</small><div className="mt-3 flex items-center gap-1 text-gold"><Star size={15} fill="currentColor"/> 4.8</div><button className="outline-button mt-4 w-full justify-center">View Branch <ArrowRight size={15}/></button></div>
+            <div className="branch-card"><span>Lahore - Gulberg</span><strong>25+</strong><small>Cars Available</small><div className="mt-3 flex items-center gap-1 text-gold"><Star size={15} fill="currentColor"/> 4.8</div><Link href="/locations" className="outline-button mt-4 w-full justify-center">View Branch <ArrowRight size={15}/></Link></div>
           </motion.div>
         </div>
       </section>
@@ -147,11 +154,9 @@ export default function HomePage() {
       <footer className="footer-shell">
         <div className="section-shell grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-5">
           <div><div className="brand-mark text-2xl font-extrabold">drive<span>i</span>stan</div><p className="mt-4 max-w-xs text-sm leading-6 text-white/50">Pakistan&apos;s premium car rental service. Drive your journey with confidence.</p></div>
-          {[
-            ['Company',['About Us','Careers','Press','Contact Us']],
-            ['Explore',['Fleet','Services','Locations','Blog']],
-            ['Support',['Help Center','Terms & Conditions','Privacy Policy','Cancellation Policy']],
-          ].map(([title,items]) => <div key={title as string}><h4 className="font-semibold">{title}</h4><div className="mt-4 space-y-3 text-sm text-white/50">{(items as string[]).map(i=><a key={i} href="#" className="block hover:text-cyan">{i}</a>)}</div></div>)}
+          <div><h4 className="font-semibold">Company</h4><div className="mt-4 space-y-3 text-sm text-white/50"><Link href="/about" className="block hover:text-cyan">About Us</Link><Link href="/corporate" className="block hover:text-cyan">Corporate</Link><Link href="/blog" className="block hover:text-cyan">Blog</Link><Link href="/locations" className="block hover:text-cyan">Locations</Link></div></div>
+          <div><h4 className="font-semibold">Explore</h4><div className="mt-4 space-y-3 text-sm text-white/50"><Link href="/fleet" className="block hover:text-cyan">Fleet</Link><Link href="/services" className="block hover:text-cyan">Services</Link><Link href="/locations" className="block hover:text-cyan">Locations</Link><Link href="/blog" className="block hover:text-cyan">Blog</Link></div></div>
+          <div><h4 className="font-semibold">Support</h4><div className="mt-4 space-y-3 text-sm text-white/50"><span className="block">Help Center</span><span className="block">Terms & Conditions</span><span className="block">Privacy Policy</span><span className="block">Cancellation Policy</span></div></div>
           <div><h4 className="font-semibold">Newsletter</h4><p className="mt-4 text-sm text-white/50">Stay updated with latest offers</p><div className="newsletter mt-4"><input placeholder="Enter your email"/><button><ArrowRight size={18}/></button></div></div>
         </div>
         <div className="section-shell flex flex-col gap-3 border-t border-white/8 py-5 text-xs text-white/40 sm:flex-row sm:justify-between"><span>© 2026 DriveIstan. All rights reserved.</span><span>Secure booking · Verified fleet · 24/7 support</span></div>
@@ -170,10 +175,10 @@ function Field({ icon, label, value }: { icon: React.ReactNode; label: string; v
   return <label className="block"><span className="mb-2 block text-xs text-white/55">{label}</span><div className="field-box"><span className="text-cyan">{icon}</span><span className="truncate">{value}</span><span className="ml-auto text-white/35">×</span></div></label>;
 }
 
-function FleetCard({ name, badge, price, seats, fuel, image, index }: { name:string; badge:string; price:string; seats:number; fuel:string; image:string; index:number }) {
+function FleetCard({ slug, name, badge, price, seats, fuel, image, index }: { slug:string; name:string; badge:string; price:string; seats:number; fuel:string; image:string; index:number }) {
   return <motion.article initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:index*.07}} whileHover={{y:-10}} className="fleet-card group">
     <div className="relative h-44 overflow-hidden"><Image src={image} alt={name} fill className="object-cover transition duration-700 group-hover:scale-110"/>{badge && <span className={`fleet-badge ${badge==='LUXURY'?'gold':''}`}>{badge}</span>}<button className="heart-btn"><Heart size={17}/></button></div>
-    <div className="p-4"><h3 className="text-base font-semibold">{name}</h3><div className="mt-3 flex flex-wrap gap-3 text-[11px] text-white/45"><span><Users size={13}/> {seats} Seats</span><span><Settings2 size={13}/> Auto</span><span><Fuel size={13}/> {fuel}</span></div><div className="mt-4"><strong className="text-cyan">{price}</strong><span className="text-xs text-white/45"> / day</span></div><button className="card-button mt-4">View Details <ArrowRight size={15}/></button></div>
+    <div className="p-4"><h3 className="text-base font-semibold">{name}</h3><div className="mt-3 flex flex-wrap gap-3 text-[11px] text-white/45"><span><Users size={13}/> {seats} Seats</span><span><Settings2 size={13}/> Auto</span><span><Fuel size={13}/> {fuel}</span></div><div className="mt-4"><strong className="text-cyan">{price}</strong><span className="text-xs text-white/45"> / day</span></div><Link href={`/fleet/${slug}`} className="card-button mt-4">View Details <ArrowRight size={15}/></Link></div>
   </motion.article>;
 }
 
